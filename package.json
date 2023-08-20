@@ -1,0 +1,23 @@
+{
+  "name": "cloud-cost-optimizer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pnc21/cloud-cost-optimizer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pnc21/cloud-cost-optimizer/issues"
+  },
+  "homepage": "https://github.com/pnc21/cloud-cost-optimizer#readme",
+  "description": "",
+  "dependencies": {
+    "cloud-cost-optimizer": "file:",
+    "jsonfile": "^6.1.0"
+  }
+}
