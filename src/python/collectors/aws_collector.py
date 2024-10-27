@@ -1,10 +1,18 @@
+import os
+from dotenv import load_dotenv
 import boto3
 from datetime import datetime, timedelta
-import json
+
+# Load environment variables
+load_dotenv()
 
 class AWSCostCollector:
     def __init__(self):
-        self.client = boto3.client('ce')  # AWS Cost Explorer client
+        self.client = boto3.client('ce',
+            aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),
+            aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'),
+            region_name=os.getenv('AWS_REGION')
+        )
 
     def get_cost_data(self, start_date=None, end_date=None):
         if not start_date:
@@ -30,7 +38,7 @@ class AWSCostCollector:
             return None
 
     def _format_response(self, response):
-        formatted_data = []
+        costs = []
         for result in response.get('ResultsByTime', []):
             for group in result.get('Groups', []):
                 cost_data = {
@@ -39,10 +47,12 @@ class AWSCostCollector:
                     'cost': float(group['Metrics']['UnblendedCost']['Amount']),
                     'currency': group['Metrics']['UnblendedCost']['Unit']
                 }
-                formatted_data.append(cost_data)
-        return formatted_data
+                costs.append(cost_data)
+        return costs
 
 if __name__ == "__main__":
     collector = AWSCostCollector()
     costs = collector.get_cost_data()
-    print(json.dumps(costs, indent=2))
+    print("AWS Costs:")
+    for cost in costs:
+        print(f"Date: {cost['date']}, Service: {cost['service']}, Cost: {cost['cost']} {cost['currency']}")
