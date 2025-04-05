@@ -21,7 +21,7 @@ const makeCommit = n => {
 
   // Ensure the generated date does not exceed today's date
   const DATE = moment()
-    .subtract(1, 'years')
+    .subtract(2, 'years')
     .add(1, 'days')
     .add(x, 'weeks')
     .add(y, 'days');
@@ -41,4 +41,4 @@ const makeCommit = n => {
   });
 };
 
-makeCommit(56);
+makeCommit(69);
